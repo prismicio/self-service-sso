@@ -30,11 +30,49 @@ Once the app is registered, go to its **Overview** and copy the following:
 
 Then go to **Certificates & secrets**, and:
 - Create a new **Client Secret**
-- Copy the value (you’ll need it for Auth0)
+- Copy the value (you'll need it for Auth0)
 
 ---
 
-## 🌐 Step 3 – Build the Microsoft Entra URLs
+## 📋 Step 3 – Add Optional Claims (for given_name, family_name, email)
+
+If you're not receiving the expected user attributes (like `name` or `email`), follow these steps:
+1. Go to your app in **App registrations**.
+2. Click **Token Configuration** → **+ Add optional claim**.
+3. Under ID token, check:
+	- `given_name`
+	- `family_name`
+	- `email`
+4. Tick the box **Turn on the Microsoft Graph email, profile permissions [...]** if prompted.
+5. Click Add to save.
+
+---
+
+## 📋 Step 4 – Modify the Manifest
+
+Some scenarios require manually editing the app manifest to allow specific behaviors:
+1. Go to Manifest in your app registration.
+2. Modify the relevant values (as in the example below).
+```
+{
+   [...]
+	"api": {
+		"acceptMappedClaims": true,
+		"knownClientApplications": [],
+		"requestedAccessTokenVersion": 2,
+		"oauth2PermissionScopes": [],
+		"preAuthorizedApplications": []
+	},
+   [...]
+```
+
+3. Click Save.
+
+Note: You may need this step if claims are still missing or Auth0 cannot parse the token correctly.
+
+---
+
+## 🌐 Step 5 – Build the Microsoft Entra URLs
 
 | Field               | Value |
 |--------------------|-------|
@@ -46,7 +84,7 @@ Replace `<TENANT_ID>` with the **Directory (tenant) ID** from earlier.
 
 ---
 
-## 🔑 Step 4 – Fill Out the Auth0 Self-Service SSO Form
+## 🔑 Step 6 – Fill Out the Auth0 Self-Service SSO Form
 
 When prompted by the Auth0 self-service SSO setup, fill in the following fields:
 
@@ -62,22 +100,22 @@ When prompted by the Auth0 self-service SSO setup, fill in the following fields:
 
 ---
 
-## ✅ Step 5 – Test and Complete the Setup
+## ✅ Step 7 – Test and Complete the Setup
 
 - Click **Test Connection** in the setup flow.
 - You should be redirected to Microsoft to log in.
-- After login, you’ll return to the app and the connection will be saved.
+- After login, you'll return to the app and the connection will be saved.
 
 ---
 
 ## ❓ Frequently Asked Questions (FAQ) & Troubleshooting
 
 ### 🔹 The test connection fails with a generic error.
-- Check that the client ID and secret are correct and don’t contain extra spaces.
+- Check that the client ID and secret are correct and don't contain extra spaces.
 - Make sure the redirect URI in Entra ID exactly matches what Auth0 uses (`/login/callback`).
 - Confirm the tenant ID is correct in all URLs.
 
-### 🔹 I get an “option validation failed” error.
+### 🔹 I get an "option validation failed" error.
 - One of the URLs is likely malformed.
   - Use the `v2.0` versions.
   - No trailing slashes.
