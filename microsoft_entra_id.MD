@@ -34,24 +34,24 @@ Then go to **Certificates & secrets**, and:
 
 ---
 
-## 📋 Step 3 – Add Optional Claims (for given_name, family_name, email)
+## 📋 Step 3 – Add Optional Claims (for `given_name`, `family_name`, `email`)
 
 If you're not receiving the expected user attributes (like `name` or `email`), follow these steps:
 1. Go to your app in **App registrations**.
 2. Click **Token Configuration** → **+ Add optional claim**.
-3. Under ID token, check:
+3. Under **ID token**, check:
 	- `given_name`
 	- `family_name`
 	- `email`
 4. Tick the box **Turn on the Microsoft Graph email, profile permissions [...]** if prompted.
-5. Click Add to save.
+5. Click **Add** to save.
 
 ---
 
 ## 📋 Step 4 – Modify the Manifest
 
 Some scenarios require manually editing the app manifest to allow specific behaviors:
-1. Go to Manifest in your app registration.
+1. Go to **Manifest** in your **App Registrations**.
 2. Modify the relevant values (as in the example below).
 ```
 {
@@ -66,7 +66,7 @@ Some scenarios require manually editing the app manifest to allow specific behav
    [...]
 ```
 
-3. Click Save.
+3. Click **Save**.
 
 Note: You may need this step if claims are still missing or Auth0 cannot parse the token correctly.
 
